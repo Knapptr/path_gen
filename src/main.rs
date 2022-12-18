@@ -2,9 +2,23 @@ mod grid;
 use std::collections::{HashSet, VecDeque};
 
 use grid::{Cell, Coords, Grid};
+use rand::seq::SliceRandom;
 
 fn main() {
-    let grid = Grid::new(5, 5);
+    // let mut stack = Vec::new();
+    let mut rng = rand::thread_rng();
+    let mut grid = Grid::new(15, 10);
+
+    let mut current_coords = Coords::from(0, 0);
+    grid.reveal_at(&current_coords);
+    while let Some(neighbors) = grid.get_unvisited_neighbors_at(&current_coords) {
+        let random_neighbor = neighbors.choose(&mut rng).unwrap();
+        let wall_number = current_coords.wall_to(random_neighbor);
+        grid.open_wall_at(&current_coords, wall_number);
+        grid.reveal_at(random_neighbor);
+        current_coords = *random_neighbor;
+    }
+
     println!("{}", grid);
 }
 
