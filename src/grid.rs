@@ -1,6 +1,6 @@
 use std::fmt::{self, Display, Formatter};
 const WALL_CHAR: &str = "#";
-const OPEN_CHAR: &str = ".";
+const OPEN_CHAR: &str = " ";
 
 #[derive(Clone)]
 pub enum Wall {
